@@ -10,30 +10,33 @@ var computerLetter;
 var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
 var guessesLeftText = document.getElementById("guessesLeft-text");
-var guessesSoFar = document.getElementById("guessesSoFar-text");
+var guessesSoFarText = document.getElementById("guessesSoFar-text");
 
 var newGame = function() {
-    var computerLetter = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    computerLetter = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    guessesLeft = 10;
+    guessesSoFar = [];
 };
+
+newGame();
 
 document.onkeyup = function(event) {
         var userGuess = event.key;
-        guessesLeft--;
         if (userGuess === computerLetter) {
             wins++;
-            location.reload();
+            newGame();
         } else if (guessesLeft > 0) {
-            guessesSoFar.textContent = userGuess;
+            guessesSoFar.push(userGuess);
             guessesLeft--;
         } else if (guessesLeft == 0) {
             losses++;
-            location.reload();
+            newGame();
         }
 
         winsText.textContent = "Wins: " + wins;
         lossesText.textContent = "Losses: " + losses;
         guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
-        guessesSoFar.textContent = "Guesses So Far: " + userGuess;
+        guessesSoFarText.textContent = "Guesses So Far: " + guessesSoFar;
 };
     //If User Guess matches Computer Letter: wins goes up by 1
     //If User Guess does not match Computer Letter: Guesses So Far logs guess; When Guesses Left equals 10 losses goes up by 1
